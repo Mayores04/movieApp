@@ -12,7 +12,7 @@ const App = () => {
   const [category, setCategory] = useState("movie");
 
   useEffect(() => {
-    searchMovies("Avengers", category);  // Fetch initial set of movies
+    searchMovies("Avengers", category); 
   }, [category]);
 
   const searchMovies = async (title, type) => {
