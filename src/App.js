@@ -2,22 +2,23 @@ import React, { useState, useEffect } from "react";
 import MovieCard from "./components/MovieCard";
 import SearchIcon from "./stories/search.svg";
 import "./App.css";
+import Recommended from "./components/Recommended";
 
 const API_URL = "http://www.omdbapi.com?apikey=b6003d8a";
 
 const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [movies, setMovies] = useState([]);
-  const [category, setCategory] = useState("movie"); 
+  const [category, setCategory] = useState("movie");
 
   useEffect(() => {
-    searchMovies(searchTerm, category);
-  }, [searchTerm, category]);
+    searchMovies("Avengers", category);  // Fetch initial set of movies
+  }, [category]);
 
   const searchMovies = async (title, type) => {
     const response = await fetch(`${API_URL}&s=${title}&type=${type}`);
     const data = await response.json();
-    
+
     if (data.Search) {
       setMovies(data.Search);
     } else {
@@ -60,6 +61,8 @@ const App = () => {
             <h2>No results found</h2>
           </div>
         )}
+
+        {movies.length > 0 && <Recommended movie={movies[0]} />}
       </div>
     </div>
   );
